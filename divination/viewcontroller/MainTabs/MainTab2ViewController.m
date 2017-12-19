@@ -247,7 +247,7 @@
     if (!cell) {
         cell = [[Tab2Cell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"list"];
     }
-    if(indexPath.row==3){
+    if(indexPath.row==-1){
         
 //        cell.title.text = nativeAd.title;
 //        cell.description.text = nativeAd.description;
@@ -324,18 +324,18 @@
                     NSMutableArray *array= [Divination objectArrayWithKeyValuesArray:response.result];
                     
                     
-                    if(array){
-                        if(array.count>=3){
-                            
-                            Divination *item=[[Divination alloc] init];
-                            
-                            item.type=1;
-                            
-                            [array addObject:item];
-                            
-                            //[self.dataSource insertObject:item atIndex:3];
-                        }
-                    }
+//                    if(array){
+//                        if(array.count>=3){
+//
+//                            Divination *item=[[Divination alloc] init];
+//
+//                            item.type=1;
+//
+//                            [array addObject:item];
+//
+//                            //[self.dataSource insertObject:item atIndex:3];
+//                        }
+//                    }
                     
                     self.tempArray=[array copy];
                     

@@ -24,4 +24,6 @@
 @property (nonatomic ,assign)NSInteger create_time;
 @property (nonatomic ,assign)NSInteger update_time;
 
+@property (nonatomic ,assign)NSInteger ad_status;
+
 @end

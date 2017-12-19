@@ -38,6 +38,8 @@
     // Do any additional setup after loading the view, typically from a nib.
     
 //    981622394@qq.com      Cnwtoo159357
+    
+    //com.ysy15350.divination
    
     
     [self initView];

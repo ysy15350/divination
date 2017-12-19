@@ -16,7 +16,7 @@
 #import "Divination.h"
 #import "Comment.h"
 #import "UserInfo.h"
-#import "SVProgressHUD.h"
+
 #import "TggStarEvaluationView.h"
 #import "UIColor+Hex.h"
 #import "UIImageView+WebCache.h"
@@ -61,6 +61,7 @@
 @property(nonatomic,strong) TggStarEvaluationView *starView1;
 @property(nonatomic,strong) TggStarEvaluationView *starView2;
 @property(nonatomic,strong) TggStarEvaluationView *starView3;
+@property(nonatomic,strong) UITextView *textView0;//输入框
 @property(nonatomic,strong) UITextView *textView1;//输入框
 
 @end
@@ -360,16 +361,16 @@
     
     CGFloat y1=CGRectGetMaxY(line.frame);
     
-    titleFooter2=[[UILabel alloc] init];
-    titleFooter2.frame = CGRectMake(marginWidth, y1, kScreenWidth  - marginWidth*2, 40);
-    titleFooter2.font = [UIFont systemFontOfSize:16];
-    titleFooter2.textColor = [UIColor colorWithHexString:@"#989898"];
-    titleFooter2.text = @"ニックネーム: ";
-    titleFooter2.textAlignment = NSTextAlignmentLeft;
+    _textView0=[[UITextView alloc] init];
+    _textView0.frame = CGRectMake(marginWidth, y1, kScreenWidth  - marginWidth*2, 40);
+    _textView0.font = [UIFont systemFontOfSize:16];
+    _textView0.textColor = [UIColor colorWithHexString:@"#989898"];
+    _textView0.text = @"";
+    _textView0.textAlignment = NSTextAlignmentLeft;
     
-    [footerView addSubview:titleFooter2];
+    [footerView addSubview:_textView0];
     
-    CGFloat y2=CGRectGetMaxY(titleFooter2.frame);
+    CGFloat y2=CGRectGetMaxY(_textView0.frame);
     
     //分隔线
     UIView *line1 = [[UIView alloc] initWithFrame:CGRectMake(marginWidth, y2, kScreenWidth-marginWidth*2, 1)];
@@ -463,10 +464,14 @@
 
 
 -(void)add_comment{
-    [SVProgressHUD showWithStatus:@"正在加载..."];
+    //[SVProgressHUD showWithStatus:@"正在加载..."];
+    [_indicator startAnimating];
     
     NSString *identification=[[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    NSString *username=@"名無し";
+    NSString *username=_textView0.text;//@"名無し";
+    if([@"" isEqualToString:username]){
+        username=@"名無し";
+    }
     NSString *content=_textView1.text;
     
     __weak CommentViewController *weakSelf=self;
@@ -505,11 +510,6 @@
                 }
             }
             
-            
-           
-            
-            [SVProgressHUD dismiss];
-            
         }
     }];
 }
@@ -518,7 +518,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"self.dataSource.count=%ld",self.dataSource.count);
+
     return self.dataSource.count;
 }
 
@@ -537,6 +537,13 @@
     
     if (!cell) {
         cell = [[CommentCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"list"];
+    }
+    Comment *comment=(Comment *)([self dataSource][indexPath.row]);
+    if(comment){
+        if(comment.ad_status==1){
+            cell.labelTitle.text=@"ads";
+            cell.labelContent.text=@"cd";
+        }
     }
     cell.itemData=[self dataSource][indexPath.row];
     cell.index = indexPath.row;

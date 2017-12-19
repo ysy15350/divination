@@ -106,7 +106,7 @@ static NSInteger ClickIndex = 0;
     
     label = [[UILabel alloc]init];
     label.backgroundColor = [UIColor clearColor];
-    label.text = @"-";
+    label.text = @"最新診断";
     label.frame = CGRectMake(kScreenWidth /2-80, 30, 160, 40);
     label.font = [UIFont systemFontOfSize:20.0];
     
@@ -531,7 +531,7 @@ static NSInteger ClickIndex = 0;
 
 -(void)bindInfo:(NSDictionary *)info{
     if(info){
-        label.text=[info objectForKey:@"title"];
+        //label.text=[info objectForKey:@"title"];
         
         title.text=[info objectForKey:@"description"];
         content.text=[info objectForKey:@"description2"];
