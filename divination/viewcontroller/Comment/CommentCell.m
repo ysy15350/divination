@@ -31,11 +31,16 @@
     _labelDate = [[UILabel alloc] init];
     [self.contentView addSubview:_labelDate];
     
+    _btnDelete= [[UIButton alloc] init];
+    [self.contentView addSubview:_btnDelete];
+    
+    _btnReport= [[UIButton alloc] init];
+    [self.contentView addSubview:_btnReport];
+    
     _labelContent = [[UILabel alloc] init];
     [self.contentView addSubview:_labelContent];
     
-    
-    
+
     
     return self;
     
@@ -87,6 +92,25 @@
                 _labelContent.textColor = [UIColor colorWithHexString:@"#555555"];
                 _labelContent.text = comment.content;//@"これはががとても評論しているのですこれは誰ががとても評論しているのでこれはががとても評論しているのです";
                 _labelContent.textAlignment = NSTextAlignmentLeft;
+                
+                
+                
+                _btnDelete.frame = CGRectMake(kScreenWidth-marginWidth*2-30, 10, 15, 15);
+                UIImage *image = [UIImage imageNamed:@"icon_delete"];
+                [_btnDelete setBackgroundImage:image forState:UIControlStateNormal];
+                
+                _btnDelete.tag = 400 ;
+                
+                [_btnDelete addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                
+                _btnReport.frame = CGRectMake(kScreenWidth-marginWidth-10, 10, 15, 15);
+                UIImage *image1 = [UIImage imageNamed:@"icon_report"];
+                [_btnReport setBackgroundImage:image1 forState:UIControlStateNormal];
+                
+                _btnReport.tag = 401 ;
+                
+                [_btnReport addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                
              
             }
             else if(comment.ad_status==1){
@@ -96,6 +120,21 @@
             }
     }
     
+}
+
+
+- (void)buttonClicked:(UIButton *)btn
+{
+    switch (btn.tag) {
+        case 400:{
+            [self.listener onItemDeleteClick:self.index];
+            break;
+        }
+        case 401:{
+            [self.listener onItemReportClick:self.index];
+            break;
+        }
+    }
 }
 
 

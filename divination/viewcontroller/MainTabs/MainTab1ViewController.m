@@ -12,6 +12,7 @@
 #import "LoveDivinationViewController.h"
 #import "CareerDivinationViewController.h"
 #import "PhoneDivinationViewController.h"
+#import "OtherViewController.h"
 #import "InfoApi.h"
 #import "PublicApi.h"
 #import "Response.h"
@@ -32,9 +33,7 @@
     UIActivityIndicatorView *_indicator;
     UILabel *label;
     UITableView *listTable;
-    
     UIView *bottomView;
-   
 }
 
 @property(nonatomic,strong) InfoApi *infoApi;
@@ -205,6 +204,8 @@
     
    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
     [self createListTable];
     [self createTopView];
     [self createBottomView];
@@ -243,8 +244,33 @@
     
     label.textColor = [UIColor whiteColor];
     label.textAlignment = NSTextAlignmentCenter;
+    
     [topView addSubview:label];
     
+    UIButton *btnSetting=[[UIButton alloc] init];
+    btnSetting.frame = CGRectMake(kScreenWidth-55,30, 30, 30);
+    UIImage *image = [UIImage imageNamed:@"icon_setting"];
+    [btnSetting setBackgroundImage:image forState:UIControlStateNormal];
+    
+    btnSetting.tag = 400 ;
+    
+    [btnSetting addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [topView addSubview:btnSetting];
+    
+   
+    
+}
+
+- (void)buttonClicked:(UIButton *)btn
+{
+    switch (btn.tag) {
+        case 400:
+        {
+            [self GotoOtherViewController];
+            break;
+        }
+    }
 }
 
 -(void)loadAdsView{
@@ -412,6 +438,15 @@
     [self.navigationController pushViewController: divinationView animated:true];//这种方式一般是使用者浏览资料，继而可以前进到下一个页面或回到上一个页面。默认动画是从右至左。
     
     //[self presentViewController:diagnosisView animated:YES completion:nil];//这种方式一般出现在需要使用者完成某件事情，如输入密码、增加资料等操作后，才能(回到跳转前的控制器)继续。例如系统的WIFI连接输入密码提示。默认动画是从下至上。
+    
+}
+
+-(void)GotoOtherViewController
+{
+    OtherViewController *otherView= [[OtherViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]];
+    
+
+    [self.navigationController pushViewController: otherView animated:true];
     
 }
 

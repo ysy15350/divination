@@ -10,6 +10,7 @@
 
 @interface Comment : NSObject
 
+@property (nonatomic ,assign)NSInteger id;
 @property(nonatomic ,copy)NSString *title;
 @property(nonatomic ,copy)NSString *images;
 @property (nonatomic ,assign)NSInteger like_a;

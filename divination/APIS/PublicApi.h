@@ -16,4 +16,10 @@
 //获取token
 -(void)send_token:(NSString *)account andPassword:(NSString *)password complete:(void(^)(id result, NSError *error))block;
 
+//举报接口
+-(void)click_report:(NSString *)detail_id andType:(NSString *)type complete:(void(^)(id result, NSError *error))block;
+
+//删除接口
+-(void)delete_list:(NSString *)identification andOtherId:(NSString *)other_id complete:(void(^)(id result, NSError *error))block;
+
 @end

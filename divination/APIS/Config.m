@@ -12,6 +12,6 @@ static const NSString * ServiceUrl = @"http://192.168.0.135:818/App/";
 
 @implementation Config
 +(NSString *)getServiceUrl{
-    return @"http://zhanbu.59156.cn";//@"http://192.168.0.135:818/";
+    return @"http://uranai.no1app.tokyo";//@"http://uranai.no1app.tokyo";//@"http://zhanbu.59156.cn";//@"http://192.168.0.135:818/";
 }
 @end

@@ -10,8 +10,8 @@
 #import "WebViewViewController.h"
 #import "CommentCell.h"
 #import "Config.h"
-#import "UserBaseApi.h"
 #import "InfoApi.h"
+#import "PublicApi.h"
 #import "Response.h"
 #import "Divination.h"
 #import "Comment.h"
@@ -20,11 +20,12 @@
 #import "TggStarEvaluationView.h"
 #import "UIColor+Hex.h"
 #import "UIImageView+WebCache.h"
+#import "ReportAlertView.h"
 
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
-@interface CommentViewController ()<UITableViewDelegate,UITableViewDataSource,UIPopoverPresentationControllerDelegate>
+@interface CommentViewController ()<UITableViewDelegate,UITableViewDataSource,UIPopoverPresentationControllerDelegate,OnItemClickListener>
 {
     UILabel *label;//标题
     
@@ -55,7 +56,7 @@
 
     
 }
-
+@property(nonatomic,strong) PublicApi *publicApi;
 @property(nonatomic,strong) InfoApi *infoApi;
 @property(nonatomic,strong) Comment *comment;
 @property(nonatomic,strong) TggStarEvaluationView *starView1;
@@ -74,6 +75,13 @@
         _infoApi=[[InfoApi alloc] init];
     
     return _infoApi;
+}
+
+-(PublicApi *)publicApi{
+    if(!_publicApi)
+        _publicApi=[[PublicApi alloc] init];
+    
+    return _publicApi;
 }
 
 - (void)viewDidLoad {
@@ -159,7 +167,7 @@
     
     img1=[[UIImageView alloc] init];
     img1.frame = CGRectMake(marginWidth,marginWidth+13, 100, 100);
-    img1.image=[UIImage imageNamed:@"tab1_item_test"];
+    img1.image=[UIImage imageNamed:@"icon_loading"];
     //设置圆角
     img1.layer.masksToBounds = YES;
     img1.layer.cornerRadius = 5.0;
@@ -450,7 +458,7 @@
         //@"http://www.360vrdh.com:8080/api/file/imgGet?fid=2"
         
         [img1 sd_setImageWithURL:[NSURL URLWithString:imageUrl]
-                    placeholderImage:[UIImage imageNamed:@"tab1_item_test"]];
+                    placeholderImage:[UIImage imageNamed:@"icon_loading"]];
         
         title.text=comment.title;
         content1.text=comment.descriptions;
@@ -463,6 +471,260 @@
 }
 
 
+
+
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+
+    return self.dataSource.count;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 110;
+}
+
+
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"list"];
+    
+    if (!cell) {
+        cell = [[CommentCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"list"];
+    }
+    Comment *comment=(Comment *)([self dataSource][indexPath.row]);
+    if(comment){
+        if(comment.ad_status==1){
+            cell.labelTitle.text=@"ads";
+            cell.labelContent.text=@"cd";
+        }
+    }
+    cell.itemData=[self dataSource][indexPath.row];
+    cell.index = indexPath.row;
+    cell.listener = self;
+    return cell;
+}
+
+
+
+
+-(void)showReportAlertView{
+    ReportAlertView *xlAlertView = [[ReportAlertView alloc] initWithTitle:@"自定义UIAlertView" message:@"不喜勿喷，大神多多指导。不胜感激" sureBtn:@"确认" cancleBtn:@"取消"];
+    xlAlertView.resultIndex = ^(NSInteger index){
+        //回调---处理一系列动作
+    };
+    [xlAlertView showXLAlertView];
+    
+    
+}
+
+
+
+
+#pragma mark - EventMethod
+
+- (void)buttonClicked:(UIButton *)btn
+{
+    switch (btn.tag) {
+        case 500:
+        {
+            NSLog(@"back");
+            
+            [self.navigationController popViewControllerAnimated:YES];
+            
+            break;
+        }
+        case 501:
+        {
+            
+            
+            if(self.comment){
+                NSString *title=self.comment.title;
+                NSString *tz_url=self.comment.tz_url;
+                NSString *detail_url=self.comment.detail_url;
+                
+                NSString *webUrl=nil;
+                
+                if(tz_url&&![@"" isEqualToString:tz_url]){
+                    webUrl=tz_url;
+                }
+                else if(detail_url){
+                    NSString *url= [Config getServiceUrl];
+                    webUrl=[url stringByAppendingString:detail_url];
+                }
+                
+                if(webUrl&&![webUrl isEqualToString:@""]){
+                    
+                    NSLog(@"openweb,title:%@,url:%@",title,webUrl);
+                    
+                    [self GotoWebViewController:webUrl withTitle:title];
+                }
+                
+                
+            }
+            
+            
+            break;
+        }
+        case 502:
+            NSLog(@"ok");
+            [self add_comment];
+            break;
+    }
+}
+
+//删除
+-(void)onItemDeleteClick:(NSInteger)index{
+    NSLog(@"删除%ld",index);
+    
+    if(self.dataSource){
+        Comment *comment=(Comment *)self.dataSource[index];
+        if(comment){
+            NSInteger id=comment.id;
+            if(id!=0){
+                NSString *detail_id=[NSString stringWithFormat:@"%ld",id];
+                
+                [self delete_list:detail_id];
+            }
+        }
+    }
+    
+}
+
+//举报
+-(void)onItemReportClick:(NSInteger)index{
+    NSLog(@"举报%ld",index);
+    
+    if(self.dataSource){
+        Comment *comment=(Comment *)self.dataSource[index];
+        if(comment){
+            NSInteger id=comment.id;
+            if(id!=0){
+                NSString *detail_id=[NSString stringWithFormat:@"%ld",id];
+                
+                [self click_report:detail_id];
+            }
+        }
+    }
+    
+}
+
+- (void)c_back
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)GotoWebViewController:(NSString *)url withTitle:(NSString *)title
+{
+    WebViewViewController *webView= [[WebViewViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]];
+    
+    webView.title=title;
+    webView.webUrl=url;//@"http://www.ysy15350.com";
+    
+    [webView setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];//翻转效果
+    
+    //[diagnosisView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+    
+    [self.navigationController pushViewController: webView animated:true];//这种方式一般是使用者浏览资料，继而可以前进到下一个页面或回到上一个页面。默认动画是从右至左。
+    
+    //[self presentViewController:diagnosisView animated:YES completion:nil];//这种方式一般出现在需要使用者完成某件事情，如输入密码、增加资料等操作后，才能(回到跳转前的控制器)继续。例如系统的WIFI连接输入密码提示。默认动画是从下至上。
+    
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
+
+#pragma mark - ApiMethod
+
+//获取数据
+- (void)loadData
+{
+    [_indicator startAnimating];
+    //[SVProgressHUD showWithStatus:@"正在加载..."];
+    
+    [self.infoApi details:_detail_id complete:^(id result, NSError *error) {
+        if (error)
+        {
+            NSLog(@"Error: %@", error);
+        }
+        else
+        {
+            
+            //UserInfo *userinfo=[UserInfo objectWithKeyValues:result];
+            
+            //是否属于类（子类）
+            //[userinfo isKindOfClass:[UserInfo class]];
+            //实际是否是这个类
+            //[userinfo isMemberOfClass:[UserInfo class]];
+            //对象中是否对指定方法做出反应：(是否包含这个方法)
+            //[userinfo respondsToSelector:@selector(tests)];
+            
+            NSLog(@"Result: %@", result);
+            Response *response=[Response objectWithKeyValues:result];
+            if(response){
+                NSInteger code=response.code;
+                NSString *msg=response.message;
+                
+                NSLog(@"%@",msg);
+                
+                if(code==200){
+                    
+                    Comment *comment= [Comment objectWithKeyValues:response.result];
+                    self.comment=comment;
+                    [self bindData:comment];
+                    
+                    if(response.comment){
+                        NSArray *array=[Comment objectArrayWithKeyValuesArray:response.comment];
+                        
+                        if(array&&array.count>0){
+                            
+                            self.dataSource=[array copy];
+                            if (listTable) {
+                                [listTable reloadData];
+                            }
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"list" object:nil userInfo:@{@"list":self.dataSource}];
+                        }
+                    }
+                }
+                else{
+                    //NSLog(@"%@",msg);
+                }
+            }
+            
+            
+            
+            //self.dataSource = [NSMutableArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8", nil];
+            
+            
+            
+            
+            [_indicator stopAnimating];
+            //[SVProgressHUD dismiss];
+            
+        }
+    }];
+    
+}
+
+//添加评论
 -(void)add_comment{
     //[SVProgressHUD showWithStatus:@"正在加载..."];
     [_indicator startAnimating];
@@ -514,53 +776,17 @@
     }];
 }
 
-
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-
-    return self.dataSource.count;
-}
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 110;
-}
-
-
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"list"];
-    
-    if (!cell) {
-        cell = [[CommentCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"list"];
-    }
-    Comment *comment=(Comment *)([self dataSource][indexPath.row]);
-    if(comment){
-        if(comment.ad_status==1){
-            cell.labelTitle.text=@"ads";
-            cell.labelContent.text=@"cd";
-        }
-    }
-    cell.itemData=[self dataSource][indexPath.row];
-    cell.index = indexPath.row;
-    //cell.delegate = self;
-    return cell;
-}
-
-
-//获取数据
-- (void)loadData
-{
-   
-    
+-(void)delete_list:(NSString *) other_id{
     [_indicator startAnimating];
-    //[SVProgressHUD showWithStatus:@"正在加载..."];
     
-    [self.infoApi details:_detail_id complete:^(id result, NSError *error) {
+     NSString *identification=[[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    
+    __weak CommentViewController *weakSelf=self;
+    
+    [self.publicApi delete_list:identification andOtherId:other_id   complete:^(id result, NSError *error) {
+        
+        [_indicator stopAnimating];
+        
         if (error)
         {
             NSLog(@"Error: %@", error);
@@ -586,174 +812,66 @@
                 NSLog(@"%@",msg);
                 
                 if(code==200){
-                    
-                    Comment *comment= [Comment objectWithKeyValues:response.result];
-                    self.comment=comment;
-                    [self bindData:comment];
-                    
-                    if(response.comment){
-                        NSArray *array=[Comment objectArrayWithKeyValuesArray:response.comment];
-                        
-                        if(array&&array.count>0){
-                        
-                            self.dataSource=[array copy];
-                            if (listTable) {
-                                [listTable reloadData];
-                            }
-                             [[NSNotificationCenter defaultCenter] postNotificationName:@"list" object:nil userInfo:@{@"list":self.dataSource}];
-                        }
-                    }
+                    [weakSelf loadData];
+                    weakSelf.textView1.text=@"";
                 }
                 else{
                     //NSLog(@"%@",msg);
                 }
             }
             
+        }
+    }];
+}
+
+//举报
+-(void)click_report:(NSString *) detail_id{
+    [_indicator startAnimating];
+    
+   
+    __weak CommentViewController *weakSelf=self;
+    
+    [self.publicApi click_report:detail_id andType:@"1"  complete:^(id result, NSError *error) {
+        
+        [_indicator stopAnimating];
+        
+        if (error)
+        {
+            NSLog(@"Error: %@", error);
+        }
+        else
+        {
             
+            //UserInfo *userinfo=[UserInfo objectWithKeyValues:result];
             
-            //self.dataSource = [NSMutableArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8", nil];
+            //是否属于类（子类）
+            //[userinfo isKindOfClass:[UserInfo class]];
+            //实际是否是这个类
+            //[userinfo isMemberOfClass:[UserInfo class]];
+            //对象中是否对指定方法做出反应：(是否包含这个方法)
+            //[userinfo respondsToSelector:@selector(tests)];
             
-            
-           
-            
-            [_indicator stopAnimating];
-            //[SVProgressHUD dismiss];
+            NSLog(@"Result: %@", result);
+            Response *response=[Response objectWithKeyValues:result];
+            if(response){
+                NSInteger code=response.code;
+                NSString *msg=response.message;
+                
+                NSLog(@"%@",msg);
+                
+                if(code==200){
+                    [weakSelf showReportAlertView];
+                    [weakSelf loadData];
+                    weakSelf.textView1.text=@"";
+                }
+                else{
+                    //NSLog(@"%@",msg);
+                }
+            }
             
         }
     }];
-
 }
-
-
-
-
-- (void)buttonClicked:(UIButton *)btn
-{
-    switch (btn.tag) {
-        case 400:
-        {
-            NSLog(@"1");
-            break;
-        }
-        case 401:
-        {
-            NSLog(@"2");
-            break;
-        }
-        case 402:
-        {
-            NSLog(@"3");
-            break;
-        }
-        case 403:
-        {
-            NSLog(@"4");
-            break;
-        }
-        case 404:
-        {
-            NSLog(@"5");
-            break;
-        }
-        case 405:
-        {
-            NSLog(@"6");
-            break;
-        }
-        case 406:
-        {
-            NSLog(@"7");
-            break;
-        }
-        case 407:
-        {
-            NSLog(@"8");
-            break;
-        }
-        case 500:
-        {
-            NSLog(@"back");
-            
-            [self.navigationController popViewControllerAnimated:YES];
-            
-            break;
-        }
-        case 501:
-        {
-            
-            
-            if(self.comment){
-                NSString *title=self.comment.title;
-                NSString *tz_url=self.comment.tz_url;
-                NSString *detail_url=self.comment.detail_url;
-                
-                NSString *webUrl=nil;
-                
-                if(tz_url&&![@"" isEqualToString:tz_url]){
-                    webUrl=tz_url;
-                }
-                else if(detail_url){
-                    NSString *url= [Config getServiceUrl];
-                    webUrl=[url stringByAppendingString:detail_url];
-                }
-                
-                if(webUrl&&![webUrl isEqualToString:@""]){
-                    
-                    NSLog(@"openweb,title:%@,url:%@",title,webUrl);
-                    
-                    [self GotoWebViewController:webUrl withTitle:title];
-                }
-                
-                
-            }
-            
-            
-            break;
-        }
-        case 502:
-            NSLog(@"ok");
-            [self add_comment];
-            break;
-    }
-}
-
-- (void)c_back
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
--(void)GotoWebViewController:(NSString *)url withTitle:(NSString *)title
-{
-    WebViewViewController *webView= [[WebViewViewController alloc] initWithNibName:nil bundle:[NSBundle mainBundle]];
-    
-    webView.title=title;
-    webView.webUrl=url;//@"http://www.ysy15350.com";
-    
-    [webView setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];//翻转效果
-    
-    //[diagnosisView setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
-    
-    [self.navigationController pushViewController: webView animated:true];//这种方式一般是使用者浏览资料，继而可以前进到下一个页面或回到上一个页面。默认动画是从右至左。
-    
-    //[self presentViewController:diagnosisView animated:YES completion:nil];//这种方式一般出现在需要使用者完成某件事情，如输入密码、增加资料等操作后，才能(回到跳转前的控制器)继续。例如系统的WIFI连接输入密码提示。默认动画是从下至上。
-    
-}
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end
 

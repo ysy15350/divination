@@ -23,7 +23,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
+    //解决下拉刷新向下偏移问题
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     [self initView];
 }

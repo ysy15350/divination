@@ -77,6 +77,10 @@ static const NSString * moduleName = @"Info/";
     self.params=[[NSMutableDictionary alloc] init];
     [self.params setValue:[NSNumber numberWithInteger:detail_id] forKey:@"id"];
     
+    NSString *identification=[[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    
+    [self.params setValue:identification forKey:@"identification"];
+    
     self.webApiTask=[[WebApiTask alloc] initWithService:[moduleName stringByAppendingString:@"details"] WithParam:self.params];
     
     [self.webApiTask RequestService:^(id result, NSError *error) {

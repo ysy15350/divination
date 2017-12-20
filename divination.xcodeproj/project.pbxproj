@@ -43,6 +43,10 @@
 		4E2DB0551FE8B2C1002E25DD /* IQUIViewController+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2DB0451FE8B2C0002E25DD /* IQUIViewController+Additions.m */; };
 		4E2DB0561FE8B2C1002E25DD /* IQKeyboardReturnKeyHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2DB0471FE8B2C0002E25DD /* IQKeyboardReturnKeyHandler.m */; };
 		4E2DB0591FE8DB69002E25DD /* Tab2Cell_1.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E2DB0581FE8DB69002E25DD /* Tab2Cell_1.m */; };
+		4E42B4EE1FEA04880000E50E /* OtherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E42B4ED1FEA04880000E50E /* OtherViewController.m */; };
+		4E42B4F11FEA054E0000E50E /* OtherTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E42B4F01FEA054E0000E50E /* OtherTableViewCell.m */; };
+		4E42B4F41FEA42220000E50E /* ProtocolAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E42B4F31FEA42220000E50E /* ProtocolAlertView.m */; };
+		4E42B6371FEA50290000E50E /* ReportAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E42B6361FEA50290000E50E /* ReportAlertView.m */; };
 		4E4709001FE39966003F45B3 /* WebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4708FF1FE39966003F45B3 /* WebViewViewController.m */; };
 		4E4709031FE39F1C003F45B3 /* PublicApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4709021FE39F1C003F45B3 /* PublicApi.m */; };
 		4E4709061FE3BE84003F45B3 /* InfoApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E4709051FE3BE84003F45B3 /* InfoApi.m */; };
@@ -244,6 +248,14 @@
 		4E2DB0471FE8B2C0002E25DD /* IQKeyboardReturnKeyHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQKeyboardReturnKeyHandler.m; sourceTree = "<group>"; };
 		4E2DB0571FE8DB69002E25DD /* Tab2Cell_1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tab2Cell_1.h; sourceTree = "<group>"; };
 		4E2DB0581FE8DB69002E25DD /* Tab2Cell_1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tab2Cell_1.m; sourceTree = "<group>"; };
+		4E42B4EC1FEA04880000E50E /* OtherViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OtherViewController.h; sourceTree = "<group>"; };
+		4E42B4ED1FEA04880000E50E /* OtherViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OtherViewController.m; sourceTree = "<group>"; };
+		4E42B4EF1FEA054E0000E50E /* OtherTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OtherTableViewCell.h; sourceTree = "<group>"; };
+		4E42B4F01FEA054E0000E50E /* OtherTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OtherTableViewCell.m; sourceTree = "<group>"; };
+		4E42B4F21FEA42220000E50E /* ProtocolAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProtocolAlertView.h; sourceTree = "<group>"; };
+		4E42B4F31FEA42220000E50E /* ProtocolAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProtocolAlertView.m; sourceTree = "<group>"; };
+		4E42B6351FEA50290000E50E /* ReportAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReportAlertView.h; sourceTree = "<group>"; };
+		4E42B6361FEA50290000E50E /* ReportAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReportAlertView.m; sourceTree = "<group>"; };
 		4E4708FE1FE39966003F45B3 /* WebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewViewController.h; sourceTree = "<group>"; };
 		4E4708FF1FE39966003F45B3 /* WebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewViewController.m; sourceTree = "<group>"; };
 		4E4709011FE39F1C003F45B3 /* PublicApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PublicApi.h; sourceTree = "<group>"; };
@@ -684,6 +696,19 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
+		4E42B4EB1FEA04680000E50E /* other */ = {
+			isa = PBXGroup;
+			children = (
+				4E42B4EC1FEA04880000E50E /* OtherViewController.h */,
+				4E42B4ED1FEA04880000E50E /* OtherViewController.m */,
+				4E42B4EF1FEA054E0000E50E /* OtherTableViewCell.h */,
+				4E42B4F01FEA054E0000E50E /* OtherTableViewCell.m */,
+				4E42B4F21FEA42220000E50E /* ProtocolAlertView.h */,
+				4E42B4F31FEA42220000E50E /* ProtocolAlertView.m */,
+			);
+			path = other;
+			sourceTree = "<group>";
+		};
 		4E4709641FE3CEAC003F45B3 /* SDWebImage */ = {
 			isa = PBXGroup;
 			children = (
@@ -932,6 +957,7 @@
 		4E5629511FE0CBB700C801A2 /* viewcontroller */ = {
 			isa = PBXGroup;
 			children = (
+				4E42B4EB1FEA04680000E50E /* other */,
 				4E4708FE1FE39966003F45B3 /* WebViewViewController.h */,
 				4E4708FF1FE39966003F45B3 /* WebViewViewController.m */,
 				4E5629A81FE1358C00C801A2 /* Divination */,
@@ -1016,6 +1042,8 @@
 				4E5629B41FE137D400C801A2 /* CommentViewController.m */,
 				4EF601A21FE21A7E0057F4F2 /* CommentCell.h */,
 				4EF601A31FE21A7E0057F4F2 /* CommentCell.m */,
+				4E42B6351FEA50290000E50E /* ReportAlertView.h */,
+				4E42B6361FEA50290000E50E /* ReportAlertView.m */,
 			);
 			path = Comment;
 			sourceTree = "<group>";
@@ -1276,11 +1304,13 @@
 				4E4709891FE3CEAC003F45B3 /* SDWebImageDecoder.m in Sources */,
 				4EFF297A1FE4F14C006929EF /* PhoneDivinationCell.m in Sources */,
 				4E5627C91FE0CA0C00C801A2 /* ViewController.m in Sources */,
+				4E42B4F11FEA054E0000E50E /* OtherTableViewCell.m in Sources */,
 				4E4709981FE3DEE0003F45B3 /* Divination.m in Sources */,
 				4E2DB04D1FE8B2C1002E25DD /* IQPreviousNextView.m in Sources */,
 				4E56290C1FE0CB5600C801A2 /* Response.m in Sources */,
 				4E2DB0131FE8AEAC002E25DD /* NSBundle+MJRefresh.m in Sources */,
 				4E2DB01B1FE8AEAC002E25DD /* MJRefreshNormalHeader.m in Sources */,
+				4E42B6371FEA50290000E50E /* ReportAlertView.m in Sources */,
 				4E4709061FE3BE84003F45B3 /* InfoApi.m in Sources */,
 				4E2DB04A1FE8B2C1002E25DD /* IQTitleBarButtonItem.m in Sources */,
 				4E47098B1FE3CEAC003F45B3 /* SDWebImageDownloader.m in Sources */,
@@ -1316,6 +1346,7 @@
 				4E5629801FE0CBB700C801A2 /* MASViewAttribute.m in Sources */,
 				4E4709861FE3CEAC003F45B3 /* UIImage+WebP.m in Sources */,
 				4E5629B51FE137D400C801A2 /* CommentViewController.m in Sources */,
+				4E42B4EE1FEA04880000E50E /* OtherViewController.m in Sources */,
 				4E2DB0181FE8AEAC002E25DD /* MJRefreshAutoStateFooter.m in Sources */,
 				4E47098C1FE3CEAC003F45B3 /* UIImage+GIF.m in Sources */,
 				4E5629101FE0CB5600C801A2 /* SVIndefiniteAnimatedView.m in Sources */,
@@ -1372,6 +1403,7 @@
 				4E56289F1FE0CB4A00C801A2 /* AFHTTPRequestOperationManager.m in Sources */,
 				4E5628A21FE0CB4A00C801A2 /* AFNetworkReachabilityManager.m in Sources */,
 				4E2DB04F1FE8B2C1002E25DD /* IQKeyboardManager.m in Sources */,
+				4E42B4F41FEA42220000E50E /* ProtocolAlertView.m in Sources */,
 				4E5629141FE0CB5600C801A2 /* MJProperty.m in Sources */,
 				4E2DB0141FE8AEAC002E25DD /* UIView+MJExtension.m in Sources */,
 				4EFF296E1FE4D885006929EF /* TggStarEvaluationView.m in Sources */,
@@ -1528,7 +1560,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = ZT6WPA2YA3;
+				DEVELOPMENT_TEAM = 8EC45MFX44;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1544,11 +1576,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-lxml2";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ysy15350.divination;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zubari.uranai;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c5130905-1877-4818-bb72-23c2f20f278c";
-				PROVISIONING_PROFILE_SPECIFIER = divination_profile;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "7a0a2d49-7f74-49a5-8117-45df4bfac44f";
+				PROVISIONING_PROFILE_SPECIFIER = zubariuranaidis;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1558,7 +1590,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = ZT6WPA2YA3;
+				DEVELOPMENT_TEAM = 8EC45MFX44;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1574,11 +1606,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-lxml2";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ysy15350.divination;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zubari.uranai;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "5ad19bce-4416-4ad3-802b-33efe1ca76a5";
-				PROVISIONING_PROFILE_SPECIFIER = divination_profile;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				PROVISIONING_PROFILE = "7a0a2d49-7f74-49a5-8117-45df4bfac44f";
+				PROVISIONING_PROFILE_SPECIFIER = zubariuranaidis;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

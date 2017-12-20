@@ -105,7 +105,7 @@
             //@"http://www.360vrdh.com:8080/api/file/imgGet?fid=2"
             
             [_imgHead sd_setImageWithURL:[NSURL URLWithString:imageUrl]
-                        placeholderImage:[UIImage imageNamed:@"tab1_item_test"]];
+                        placeholderImage:[UIImage imageNamed:@"icon_loading"]];
             
         
             _labelTitle.text = divination.title;//@"匿名のユーザー";

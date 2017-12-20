@@ -37,10 +37,23 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-//    981622394@qq.com      Cnwtoo159357
-    
+    //包名
     //com.ysy15350.divination
-   
+    //开发账号：    981622394@qq.com      Cnwtoo159357
+    //-------------------------------------
+    //发布账号：1929581812@qq.com  Asd159357
+    //com.zubari.uranai
+    //发布新增权限：通讯录、日历，info
+    
+    //    Privacy - Contacts Usage Description
+    //
+    //    訪問者訪問の許可を受けたかどうか
+    //
+    //    Privacy - Calendars Usage Description
+    //
+    //    カレンダーを訪問する
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     [self initView];
     
@@ -52,27 +65,34 @@
     //将这个控件加到父容器中。
     [self.view addSubview:_indicator];
     
-//    [self loadAdsView];
+    //    [self loadAdsView];
     
     UIImageView *topBannerImg= [[UIImageView alloc] init];
     topBannerImg.frame = CGRectMake(0,0, kScreenWidth, kScreenHeight);
     topBannerImg.image=[UIImage imageNamed:@"icon_start"];
     [self.view addSubview:topBannerImg];
     
+//   UIButton *_btnDelete=[[UIButton alloc] init];
+//    _btnDelete.frame = CGRectMake(0, 10, 100, 25);
+//    UIImage *image = [UIImage imageNamed:@"tab1_img1"];
+//    [_btnDelete setBackgroundImage:image forState:UIControlStateNormal];
+//
+//    [self.view addSubview:_btnDelete];
+    
     
     [self send_token];
     
     //MyAlert
-//    + (MyAlertCenter *) defaultCenter;//单例 生成alert控制器
-//    - (void) postAlertWithMessage:(NSString*)message;//弹出文字
-  
+    //    + (MyAlertCenter *) defaultCenter;//单例 生成alert控制器
+    //    - (void) postAlertWithMessage:(NSString*)message;//弹出文字
     
-//                alert = [[UIAlertView alloc]
-//                         initWithTitle:@"提示信息" message:[components objectAtIndex:2]
-//                         delegate:self cancelButtonTitle:nil
-//                         otherButtonTitles:nil, nil];
-//                [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(performDismiss:) userInfo:nil repeats:NO];
-//                [alert show];
+    
+    //                alert = [[UIAlertView alloc]
+    //                         initWithTitle:@"提示信息" message:[components objectAtIndex:2]
+    //                         delegate:self cancelButtonTitle:nil
+    //                         otherButtonTitles:nil, nil];
+    //                [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(performDismiss:) userInfo:nil repeats:NO];
+    //                [alert show];
     
 }
 
@@ -181,7 +201,7 @@
                 NSInteger code=response.code;
                 NSString *msg=response.message;
                 
-                 NSLog(@"%@",msg);
+                NSLog(@"%@",msg);
                 
                 if(code==200){
                     //[self GotoMainViewController];
@@ -208,3 +228,4 @@
 
 
 @end
+

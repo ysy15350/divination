@@ -120,6 +120,11 @@
     NSString *url=[NSString stringWithFormat:@"%@/%@",self.request.requestUrl,self.service];
     NSLog(@"请求地址字符串:%@",url);
     
+    //AFNetworking忽略缓存
+    NSURLCache *shareCache= [[NSURLCache alloc] initWithMemoryCapacity:0 diskCapacity:0 diskPath:nil];
+    
+    [NSURLCache setSharedURLCache:shareCache];
+    //[shareCache release];
     
     //mutableCopy copy
     NSDictionary *parameters =[self.request.params copy];//获取请求参数（系统参数、业务参数）

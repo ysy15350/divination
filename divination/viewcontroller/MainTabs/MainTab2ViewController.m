@@ -79,6 +79,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     type=3;//1:恋爱相谈,2事业占卜，3评论列表
     pageIndex=1;

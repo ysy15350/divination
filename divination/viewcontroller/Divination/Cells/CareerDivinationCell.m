@@ -49,7 +49,7 @@
     int marginWidth=15;
     
     _imgHead.frame = CGRectMake(marginWidth,marginWidth, 90, 90);
-    _imgHead.image=[UIImage imageNamed:@"tab1_item_test"];
+    //_imgHead.image=[UIImage imageNamed:@"tab1_item_test"];
     
     //设置圆角
     _imgHead.layer.masksToBounds = YES;
@@ -70,7 +70,7 @@
         //@"http://www.360vrdh.com:8080/api/file/imgGet?fid=2"
         
         [_imgHead sd_setImageWithURL:[NSURL URLWithString:imageUrl]
-                    placeholderImage:[UIImage imageNamed:@"tab1_item_test"]];
+                    placeholderImage:[UIImage imageNamed:@"icon_loading"]];
     }
     
     

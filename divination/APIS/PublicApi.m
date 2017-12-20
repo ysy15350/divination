@@ -48,4 +48,56 @@ static const NSString * moduleName = @"Public/";
     }];
 }
 
+-(void)click_report:(NSString *)detail_id andType:(NSString *)type complete:(void (^)(id, NSError *))block{
+    
+    self.params=[[NSMutableDictionary alloc] init];
+    
+    [self.params setObject:detail_id forKey:@"id"];
+    
+    [self.params setObject:type forKey:@"type"];
+    
+    self.webApiTask=[[WebApiTask alloc] initWithService:[moduleName stringByAppendingString:@"click_report"] WithParam:self.params];
+    
+    [self.webApiTask RequestService:^(id result, NSError *error) {
+        if (error)
+        {
+            if (block) block(nil, error);
+        }
+        else
+        {
+        
+            NSLog(@"result%@", result);
+            
+          
+            if (block) block(result, nil);
+        }
+    }];
+}
+
+-(void)delete_list:(NSString *)identification andOtherId:(NSString *)other_id complete:(void (^)(id, NSError *))block{
+    self.params=[[NSMutableDictionary alloc] init];
+    
+    [self.params setObject:identification forKey:@"identification"];
+    
+    [self.params setObject:other_id forKey:@"other_id"];
+    [self.params setObject:@"1" forKey:@"type"];
+    
+    self.webApiTask=[[WebApiTask alloc] initWithService:[moduleName stringByAppendingString:@"delete_list"] WithParam:self.params];
+    
+    [self.webApiTask RequestService:^(id result, NSError *error) {
+        if (error)
+        {
+            if (block) block(nil, error);
+        }
+        else
+        {
+            
+            NSLog(@"result%@", result);
+            
+            
+            if (block) block(result, nil);
+        }
+    }];
+}
+
 @end

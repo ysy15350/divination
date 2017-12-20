@@ -7,6 +7,7 @@
 //
 
 #import "AFNetworking.h"
+#import "Config.h"
 #import "Request.h"
 #import "MD5Util.h"
 #import "JsonUtil.h"
@@ -72,7 +73,9 @@
         
 //        self.requestUrl=isDebug==YES?@"http://zhanbu.59156.cn/App/":@"http://zhanbu.59156.cn/App/";//
         
-         self.requestUrl=isDebug==YES?@"http://uranai.no1app.tokyo/App/":@"http://uranai.no1app.tokyo/App/";
+//         self.requestUrl=isDebug==YES?@"http://uranai.no1app.tokyo/App/":@"http://uranai.no1app.tokyo/App/";
+
+        self.requestUrl=[[Config getServiceUrl] stringByAppendingString:@"/App/"];
         
         self.partner_id=isDebug==YES?@"d89170ee-7ede-415b-8022-3be2793d1674"
         :@"17ab7302-6ba9-4c4e-ab48-9ff004951b41";

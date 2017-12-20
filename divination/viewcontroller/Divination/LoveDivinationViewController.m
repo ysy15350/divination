@@ -68,6 +68,8 @@
     pageIndex=1;
     pageSize=10;
     
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
     self.dataSource = [[NSMutableArray alloc] init];
     //self.dataSource = [NSMutableArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8", nil];
     self.tempArray = [NSMutableArray array];
